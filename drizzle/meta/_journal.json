@@ -8,6 +8,13 @@
       "when": 1690660710623,
       "tag": "0000_skinny_wolfsbane",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1690667187433,
+      "tag": "0001_famous_sinister_six",
+      "breakpoints": true
     }
   ]
 }

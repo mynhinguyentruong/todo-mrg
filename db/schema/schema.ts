@@ -6,6 +6,7 @@ import {
   uniqueIndex,
   varchar,
   text,
+  boolean,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
@@ -23,6 +24,7 @@ export const todos = pgTable("todos", {
   title: varchar("title", { length: 256 }),
   content: varchar("content", { length: 256 }),
   authorId: integer("author_id").notNull(),
+  completed: boolean("completed").default(false),
 });
 
 export const todosRelations = relations(todos, ({ one }) => ({
