@@ -15,6 +15,13 @@
       "when": 1690667187433,
       "tag": "0001_famous_sinister_six",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1690746372074,
+      "tag": "0002_lush_alex_wilder",
+      "breakpoints": true
     }
   ]
 }
