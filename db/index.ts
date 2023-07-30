@@ -20,24 +20,30 @@ type NewTodo = InferModel<typeof todos, "insert">;
 
 const todo = {
   authorId: 1,
+  listId: 1,
   title: "Todo 1",
   content: "This is my first todo",
+};
+
+const todoList = {
+  authorId: 1,
+  title: "Todo 1",
 };
 
 const addTodo = async (todo: NewTodo) => {
   await db.insert(todos).values(todo);
 };
 
-const getAllTodos = async (userId: number) => {
+export const getAllTodos = async (userId: number) => {
   const result = await db
     .select()
     .from(todos)
     .where(eq(todos.authorId, userId));
   console.log({ result });
 
-  return;
+  return result;
 };
 
 // getUser().catch((err) => console.log({ err }));
 // addTodo(todo).catch((err) => console.log("add todo error: ", err));
-getAllTodos(1).catch((err) => console.log("get all todo error: ", err));
+// getAllTodos(1).catch((err) => console.log("get all todo error: ", err));
