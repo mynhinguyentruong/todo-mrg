@@ -1,17 +1,7 @@
 // Connect to Docker Postgres instance
-import { drizzle, PostgresJsDatabase } from "drizzle-orm/postgres-js";
+import { drizzle } from "drizzle-orm/postgres-js";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
 import postgres from "postgres";
-import {
-  integer,
-  pgEnum,
-  pgTable,
-  serial,
-  uniqueIndex,
-  varchar,
-  text,
-} from "drizzle-orm/pg-core";
-import { relations } from "drizzle-orm";
 import "dotenv/config";
 
 const connectionString = `postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@localhost:54322/tododatabase`;
