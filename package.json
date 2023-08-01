@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "docker": "docker compose --env-file .env up -d",
-    "generate": "drizzle-kit generate:pg",
-    "migration:push": "node -r esbuild-register ./db/schema/migrate.ts"
+    "generate": "drizzle-kit generate:pg && node -r esbuild-register ./db/schema/migrate.ts",
+    "migration:push": ""
   },
   "dependencies": {
     "@types/node": "20.4.5",
@@ -21,6 +21,7 @@
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
     "next": "13.4.12",
+    "next-auth": "^4.22.3",
     "postcss": "8.4.27",
     "postgres": "^3.3.5",
     "react": "18.2.0",
