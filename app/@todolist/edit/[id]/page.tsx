@@ -1,13 +1,16 @@
-import Modal, { Frame } from "@/components/modal";
+import Modal, { EditListOrTask } from "@/components/modal";
+import { getATodoList } from "@/db";
 
-export default function Edit({params}: {params: { id: string }}) {
+export default async function Edit({params}: {params: { id: string }}) {
     // on click db.delete entry
     // revalidate and navigate back to home page
-    console.log({params});
+    const list = await getATodoList(params.id)
+
+    // get title from here
     
     return (
         <Modal>
-           <button>Edit {params.id} </button> 
+          <EditListOrTask list={list} todo={null} /> 
         </Modal>
     )
 }
