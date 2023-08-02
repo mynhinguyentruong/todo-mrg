@@ -5,7 +5,7 @@ export default function Delete({params}: {params: { id: string }}) {
     // revalidate and navigate back to home page
     return (
         <Modal>
-            <DeleteListOrTask listId={params.id} />
+            <DeleteListOrTask listId={parseInt(params.id)} />
         </Modal>
     )
 }

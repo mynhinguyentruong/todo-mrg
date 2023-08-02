@@ -1,12 +1,11 @@
-import { getAllTodoLists, getOrCreateUser } from '@/db'
-import './globals.css'
+import '@/app/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import TodoList from '@/components/todo-list'
 import Link from 'next/link'
-import { SessionProvider } from "next-auth/react"
 import { getServerSession } from 'next-auth'
-import { authOptions } from './api/auth/[...nextauth]/authOptions'
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
+import { getAllTodoLists, getOrCreateUser } from '@/app/action'
 
 
 const inter = Inter({ subsets: ['latin'] })

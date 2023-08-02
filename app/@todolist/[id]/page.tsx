@@ -1,9 +1,9 @@
+import { getATodoList, getAllTodos } from "@/app/action";
+import { Todo } from "@/app/types/db";
 import EditAndDeleteIcon from "@/components/edit-delete-icon";
 import { TodoComponent } from "@/components/modal";
 import NoTaskYet from "@/components/no-task-yet";
-import { getATodoList, getAllTodos } from "@/db"
 
-import type { Todo } from "@/db";
 import Link from "next/link";
 
 export default async function Page({params}: { params: { id: string }}) {
