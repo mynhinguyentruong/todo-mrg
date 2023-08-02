@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-import type { TodoList, Todo } from "@/db";
 import EditAndDeleteIcon from "./edit-delete-icon";
+import { Todo, TodoList } from "@/app/types/db";
 
 type NoTaskYetProps = {
     todolist: TodoList,

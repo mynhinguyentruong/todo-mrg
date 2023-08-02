@@ -7,7 +7,7 @@ export default function Delete({params}: {params: { id: string, todoId: string }
     
     return (
         <Modal>
-            <DeleteListOrTask todoId={params.todoId} listId={params.id} />
+            <DeleteListOrTask todoId={parseInt(params.todoId)} listId={parseInt(params.id)} />
         </Modal>
     )
 }

@@ -2,10 +2,10 @@
 import { useCallback, useRef, useEffect, MouseEventHandler, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { addNewTask, addTodoList, deleteTodoListOrTask, editListOrTodo, setCompleted } from '@/app/action'
-import { NewTodo, Todo, TodoList, Users } from '@/db'
+
 import clsx from 'clsx'
 import EditAndDeleteIcon from './edit-delete-icon'
-import Router from 'next/router'
+import { NewTodo, Todo, TodoList, Users } from '@/app/types/db'
 
 
 export default function Modal({ children }: { children: React.ReactNode }) {
@@ -190,7 +190,7 @@ export function Frame({user}: { user: Users }) {
     )
   }
 
-export function DeleteListOrTask({listId, todoId}: { listId: string; todoId?: string}) {
+export function DeleteListOrTask({listId, todoId}: { listId: number; todoId?: number}) {
   const router = useRouter()
 
   function deleteTodo() {
@@ -198,6 +198,7 @@ export function DeleteListOrTask({listId, todoId}: { listId: string; todoId?: st
 
     router.refresh()
   }
+
   return (
            <div className="m-8 my-20 max-w-[400px] mx-auto sm:rounded-2xl bg-white p-10">
                 <div className="mb-8">

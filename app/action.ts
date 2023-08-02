@@ -1,16 +1,10 @@
 "use server";
-import { drizzle, PostgresJsDatabase } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
-import { todos, users, todolists } from "@/db/schema/schema";
+
+import { todos, todolists } from "@/db/schema/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { NewTodo } from "@/db";
-
-const queryClient = postgres(
-  "postgres://user:password@0.0.0.0:54322/tododatabase"
-);
-const db: PostgresJsDatabase = drizzle(queryClient);
+import { NewTodo } from "@/app/types/db";
+import { db } from "@/db";
 
 export const addTodoList = async (title: string, authorId: number) => {
   const result = await db
@@ -21,23 +15,18 @@ export const addTodoList = async (title: string, authorId: number) => {
   revalidatePath("/");
   revalidatePath("/new");
   revalidatePath("/[id]");
-
-  // redirect(`/${result[0].id}`);
 };
 
 export const deleteTodoListOrTask = async (
-  listId: number | string,
-  todoId?: number | string
+  listId: number,
+  todoId: number = 0
 ) => {
   if (todoId) {
-    todoId = typeof todoId === "string" ? parseInt(todoId) : todoId;
     await db.delete(todos).where(eq(todos.id, todoId));
 
     revalidatePath(`/${listId}`);
     return;
   }
-
-  if (typeof listId === "string") listId = parseInt(listId);
 
   await db.delete(todos).where(eq(todos.listId, listId));
   await db.delete(todolists).where(eq(todolists.id, listId));
@@ -49,24 +38,16 @@ export const addNewTask = async (todo: NewTodo) => {
   const result = await db.insert(todos).values(todo).returning();
   const listId = result[0].listId;
   revalidatePath(`/${listId}`);
-
-  // can redirect and have a middleware to do stuff
-  // check where the original url coming from
-  // redirect(`/${listId}`);
 };
 
 export const editListOrTodo = async (
-  listId: number | string,
+  listId: number,
   newContent: string,
-  todoId?: number | string
+  todoId?: number
 ) => {
   if (listId === 0) throw new Error("Invalid listId passed into edit function");
 
-  if (typeof listId === "string") listId = parseInt(listId);
-
   if (todoId) {
-    todoId = typeof todoId === "string" ? parseInt(todoId) : todoId;
-
     await db
       .update(todos)
       .set({ content: newContent })
