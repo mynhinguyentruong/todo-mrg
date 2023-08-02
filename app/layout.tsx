@@ -6,7 +6,7 @@ import TodoList from '@/components/todo-list'
 import Link from 'next/link'
 import { SessionProvider } from "next-auth/react"
 import { getServerSession } from 'next-auth'
-import { authOptions } from './api/auth/[...nextauth]/route'
+import { authOptions } from './api/auth/[...nextauth]/authOptions'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -51,7 +51,7 @@ export default async function RootLayout({
       className="relative bg-gray-50 dark:bg-slate-900 w-screen h-screen pattern"
   >
       <nav
-      className="z-20 max-h-64 overflow-y-auto overscroll-contain flex grow-0 shrink justify-between gap-4 border-t border-gray-200 bg-white/50 p-2.5 shadow-lg backdrop-blur-lg dark:border-slate-600/60 dark:bg-slate-800/50 fixed top-2/4 -translate-y-2/4 left-6 min-h-[auto] min-w-[32px] flex-col rounded-lg border"
+      className="z-20 max-h-64 overflow-y-auto overscroll-contain flex grow-0 shrink justify-between gap-4 border-t border-gray-200 bg-white/50 p-1 shadow-lg backdrop-blur-lg dark:border-slate-600/60 dark:bg-slate-800/50 fixed top-2/4 -translate-y-2/4 left-6 min-h-[auto] w-1/14 flex-col items-center rounded-lg border"
       >
           {results?.map(list => <TodoList key={list.id} list={list} />)}
   

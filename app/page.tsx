@@ -19,6 +19,8 @@ export default async function Home() {
   // )
 
   return (
-    <h1>Start create, edit your todo list</h1>
-  )
+    <>
+    <h1 className='my-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>Please sign in to continue</h1>
+    <SignIn />
+  </>)
 }
