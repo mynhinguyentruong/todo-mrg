@@ -1,11 +1,10 @@
 import { drizzle, PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { todos, users, todolists } from "./schema/schema";
-import * as schema from "./schema/schema";
-import { InferModel, eq } from "drizzle-orm";
+import { InferModel, eq, sql } from "drizzle-orm";
 
 const queryClient = postgres(
-  "postgres://user:password@0.0.0.0:54322/tododatabase"
+  `postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@0.0.0.0:54322/${process.env.POSTGRES_DB}`
 );
 const db: PostgresJsDatabase = drizzle(queryClient);
 
@@ -25,18 +24,6 @@ export type NewTodoList = InferModel<typeof todolists, "insert">;
 export type Users = InferModel<typeof users>;
 export type NewUser = InferModel<typeof users, "insert">;
 
-const todo: NewTodo = {
-  authorId: 1,
-  listId: 1,
-  title: "Todo 1",
-  content: "This is my first todo",
-};
-
-const todoList = {
-  authorId: 1,
-  title: "Todo 1",
-};
-
 const addTodo = async (todo: NewTodo) => {
   await db.insert(todos).values(todo);
 };
@@ -51,10 +38,28 @@ export const addTodoList = async ({ title, authorId }: NewTodoList) => {
 };
 
 export const getAllTodos = async (listId: number) => {
-  const result = await db.select().from(todos).where(eq(todos.listId, listId));
+  const result = await db
+    .select()
+    .from(todos)
+    .where(eq(todos.listId, listId))
+    .orderBy(todos.id);
   console.log({ result });
 
   return result;
+};
+
+export const getATodo = async (todoId: number | string) => {
+  if (typeof todoId === "string") {
+    todoId = parseInt(todoId);
+  }
+
+  if (isNaN(todoId)) {
+    throw new Error("Invalid argument passed in getATodo function");
+  }
+
+  const result = await db.select().from(todos).where(eq(todos.id, todoId));
+
+  return result[0];
 };
 
 export const getAllTodoLists = async (userId: number) => {
@@ -66,7 +71,14 @@ export const getAllTodoLists = async (userId: number) => {
   return result;
 };
 
-export const getATodoList = async (listId: number) => {
+export const getATodoList = async (listId: number | string) => {
+  if (typeof listId === "string") {
+    listId = parseInt(listId);
+  }
+
+  if (isNaN(listId)) {
+    throw new Error("Invalid argument passed in getATodoList function");
+  }
   const result = await db
     .select()
     .from(todolists)
@@ -75,6 +87,16 @@ export const getATodoList = async (listId: number) => {
   return result[0];
 };
 
-// getUser().catch((err) => console.log({ err }));
-// addTodo(todo).catch((err) => console.log("add todo error: ", err));
-// getAllTodos(1).catch((err) => console.log("get all todo error: ", err));
+export const getOrCreateUser = async (user: NewUser) => {
+  const result = await db
+    .select()
+    .from(users)
+    .where(sql`lower(${users.email}) = ${user.email}`);
+
+  if (result) {
+    return result[0];
+  }
+
+  const newUser = await db.insert(users).values(user).returning();
+  return newUser[0];
+};
