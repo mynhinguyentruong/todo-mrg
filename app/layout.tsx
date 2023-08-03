@@ -7,6 +7,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { getOrCreateUser } from '@/lib/storage/UserRepository'
 import { findAllTodoLists } from '@/lib/storage/TodoListRepository'
+import { UserSession } from './types/session/user-session'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -25,7 +26,7 @@ export default async function RootLayout({
 }) {
   const session = await getServerSession(authOptions)
 
-  if (session?.user == null || session == null || !session.user.name || !session.user.email) {
+  if (session?.user == null ) {
     return (
       <html lang="en">
         <body className={`${inter.className} min-h-screen flex flex-col justify-center items-center` }>{children}</body>
@@ -33,7 +34,7 @@ export default async function RootLayout({
     ) 
   }
 
-  const user = await getOrCreateUser({ name: session.user.name, email: session.user.email})
+  const user = await getOrCreateUser({ name: session.user.name, email: session.user.email} as UserSession)
 
   const results = await findAllTodoLists(user.id)
 
