@@ -1,13 +1,10 @@
-import { getATodoList } from "@/app/action";
+import { Todo } from "@/app/types/db";
 import Modal, { EditListOrTask } from "@/components/modal";
+import { getOneTodo } from "@/lib/storage/TodoRepository";
 
 export default async function Edit({params}: {params: { id: string }}) {
-    // on click db.delete entry
-    // revalidate and navigate back to home page
-    const list = await getATodoList(parseInt(params.id))
+    const list = (await getOneTodo(parseInt(params.id))) as Todo
 
-    // get title from here
-    
     return (
         <Modal>
           <EditListOrTask list={list} todo={null} /> 

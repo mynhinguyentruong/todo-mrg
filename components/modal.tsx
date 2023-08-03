@@ -1,4 +1,5 @@
 'use client'
+
 import React, { useCallback, useRef, useEffect, MouseEventHandler, useState, KeyboardEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { createTodo, deleteTodo, updateTodo } from '@/lib/storage/TodoRepository'
@@ -179,8 +180,6 @@ export function CreateNewTodoList({user}: { user: User }) {
                             value={title}
                             type="text" name="title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-500 focus:border-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black" placeholder="Enter list title" required/>
                     </div>
-                   
-                   
                     <button
                         formAction={create} 
                         className="w-full text-white bg-red-400 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
