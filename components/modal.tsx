@@ -1,7 +1,6 @@
 'use client'
 import React, { useCallback, useRef, useEffect, MouseEventHandler, useState, KeyboardEvent } from 'react'
 import { useRouter } from 'next/navigation'
-import { addNewTask, addTodoList, deleteTodoListOrTask, editListOrTodo, setCompleted } from '@/app/action'
 import { createTodo, deleteTodo, updateTodo } from '@/lib/storage/TodoRepository'
 import clsx from 'clsx'
 import EditAndDeleteButton from '@/components/edit-delete-button'
@@ -34,7 +33,6 @@ export default function Modal({ children }: { children: React.ReactNode }) {
   )
 
   useEffect(() => {
-    console.log("effect")
     document.addEventListener('keydown', onKeyDown)
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [onKeyDown])
@@ -203,7 +201,7 @@ export function DeleteListOrTask({listId, todoId}: { listId: number; todoId?: nu
     if (todoId) {
       await deleteTodo(todoId)
       router.refresh()
-      router.push(`${listId}`)
+      router.push(`/${listId}`)
       return;
     }
     await deleteTodoList(listId)

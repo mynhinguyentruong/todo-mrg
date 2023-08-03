@@ -1,5 +1,7 @@
 import '@/app/globals.css'
 import type { Metadata } from 'next'
+import type { UserSession } from '@/app/types/session/user-session'
+
 import { Inter } from 'next/font/google'
 import TodoList from '@/components/todo-list'
 import Link from 'next/link'
@@ -7,7 +9,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { getOrCreateUser } from '@/lib/storage/UserRepository'
 import { findAllTodoLists } from '@/lib/storage/TodoListRepository'
-import { UserSession } from './types/session/user-session'
+
 
 
 const inter = Inter({ subsets: ['latin'] })
