@@ -17,6 +17,7 @@ export function SignOut() {
 export function SignIn() {
     return (
         <button
+        name='signin'
         className="flex bg-black text-neutral-200 px-4 py-3 rounded-md font-semibold text-sm mb-4 hover:text-white transition-all border border-gray-800"
         onClick={() => signIn('github')}
       >
