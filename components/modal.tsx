@@ -1,12 +1,12 @@
 'use client'
-import { useCallback, useRef, useEffect, MouseEventHandler, useState } from 'react'
+import React, { useCallback, useRef, useEffect, MouseEventHandler, useState, KeyboardEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { addNewTask, addTodoList, deleteTodoListOrTask, editListOrTodo, setCompleted } from '@/app/action'
-
+import { createTodo, deleteTodo, updateTodo } from '@/lib/storage/TodoRepository'
 import clsx from 'clsx'
-import EditAndDeleteIcon from './edit-delete-icon'
-import { NewTodo, Todo, TodoList, Users } from '@/app/types/db'
-
+import EditAndDeleteButton from '@/components/edit-delete-button'
+import { Todo, TodoList, User } from '@/app/types/db'
+import { createTodoList, deleteTodoList, updateTodoList } from '@/lib/storage/TodoListRepository'
 
 export default function Modal({ children }: { children: React.ReactNode }) {
   const overlay = useRef(null)
@@ -34,6 +34,7 @@ export default function Modal({ children }: { children: React.ReactNode }) {
   )
 
   useEffect(() => {
+    console.log("effect")
     document.addEventListener('keydown', onKeyDown)
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [onKeyDown])
@@ -60,17 +61,17 @@ export function NewTask({ todoList }: { todoList: TodoList}) {
     const router = useRouter()
 
     const [title, setTitle] = useState("")
-    const todo: NewTodo = {
+    const todo: Omit<Todo, "id" | "completed"> = {
       authorId: todoList.authorId,
       content: title,
       title: todoList.title,
       listId: todoList.id
     }
     
-    function add() {
-      addNewTask(todo)
-
+    const add = async() => {
+      await createTodo(todo)
       router.refresh()
+      router.push(`/${todoList.id}`)
     }
     
     return (
@@ -85,7 +86,6 @@ export function NewTask({ todoList }: { todoList: TodoList}) {
                             value={title}
                             type="text" name="title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:text-white" placeholder="New task" required/>
                     </div>
-                   
                    
                     <button
                         formAction={add} 
@@ -110,9 +110,6 @@ export function EditListOrTask({ list, todo }: ListOrTask) {
     const router = useRouter()
     const [title, setTitle] = useState(list?.title || todo?.content || "")
 
-    const listId = list?.id || todo?.listId || 0
-    // if (!title) return <h1>Cannot find list or task</h1>
-
     const type = list ? 'list' : 'task'
 
     async function update() {
@@ -122,14 +119,14 @@ export function EditListOrTask({ list, todo }: ListOrTask) {
       }
 
       if (todo && title) {
-        await editListOrTodo(todo.listId, title, todo.id)
+        await updateTodo(todo.id, { content: title }) 
 
         router.refresh()
         return;
       }
 
       if (list && title) {
-        await editListOrTodo(list.id, title)
+        await updateTodoList(list.id, {title})
 
         router.refresh()
         return 
@@ -160,8 +157,17 @@ export function EditListOrTask({ list, todo }: ListOrTask) {
       </div>
     )
   }
-export function Frame({user}: { user: Users }) {
+export function CreateNewTodoList({user}: { user: User }) {
+    const router = useRouter()
     const [title, setTitle] = useState("")
+
+    const create = async () => {
+      if (!title) return
+
+      const { id } = await createTodoList(title, user.id)
+      router.refresh()
+      router.push(`/${id}`)
+    }
 
     return (
       <>
@@ -178,9 +184,9 @@ export function Frame({user}: { user: Users }) {
                    
                    
                     <button
-                        formAction={() => addTodoList(title, user.id)} 
+                        formAction={create} 
                         className="w-full text-white bg-red-400 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-                        >Doneeee
+                        >Done
                     </button>
                     
                 </form>
@@ -193,10 +199,17 @@ export function Frame({user}: { user: Users }) {
 export function DeleteListOrTask({listId, todoId}: { listId: number; todoId?: number}) {
   const router = useRouter()
 
-  function deleteTodo() {
-    deleteTodoListOrTask(listId, todoId)
+  const deleteTask = async () => {
+    if (todoId) {
+      await deleteTodo(todoId)
+      router.refresh()
+      router.push(`${listId}`)
+      return;
+    }
+    await deleteTodoList(listId)
 
     router.refresh()
+    router.push('/')
   }
 
   return (
@@ -207,7 +220,7 @@ export function DeleteListOrTask({listId, todoId}: { listId: number; todoId?: nu
                 </div>
                 <div className="space-y-4">
                     <button
-                      onClick={deleteTodo} 
+                      onClick={deleteTask} 
                       className="p-3 bg-red-500 rounded-full text-white w-full font-semibold hover:bg-red-700">Delete</button>
                     <button 
                       onClick={() => router.back()}
@@ -219,18 +232,20 @@ export function DeleteListOrTask({listId, todoId}: { listId: number; todoId?: nu
 
 export function TodoComponent({todo}: { todo: Todo }) {
   const [isClicked, setIsClicked] = useState(false)
+  const router = useRouter()
 
-  function doStuff() {
+  const setTodoCompleted = async() => {
     setIsClicked(true)
-    setCompleted(todo.id, todo.listId)
+    await updateTodo(todo.id, { completed: true })
+    router.refresh()
   }
 
   return (
     <li 
     className={clsx("inline-flex items-center justify-between gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white", { hidden: isClicked })}>
       <button 
-        onClick={doStuff}>{todo.content}</button>
-      <EditAndDeleteIcon listId={todo.listId} todoId={todo.id}/>
+        onClick={setTodoCompleted}>{todo.content}</button>
+      <EditAndDeleteButton listId={todo.listId} todoId={todo.id}/>
     </li>
   )
 }

@@ -1,4 +1,4 @@
-import Modal, { DeleteListOrTask, Frame } from "@/components/modal";
+import Modal, { DeleteListOrTask } from "@/components/modal";
 
 export default function Delete({params}: {params: { id: string }}) {
     // on click db.delete entry

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "docker": "docker compose --env-file .env up -d",
-    "generate": "drizzle-kit generate:pg && node -r esbuild-register ./db/schema/migrate.ts",
+    "docker:terminate": "docker compose down",
+    "migrate": "drizzle-kit generate:pg && node -r esbuild-register ./db/schema/migrate.ts",
     "migration:push": ""
   },
   "dependencies": {

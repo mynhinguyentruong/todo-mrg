@@ -5,7 +5,8 @@ import TodoList from '@/components/todo-list'
 import Link from 'next/link'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
-import { getAllTodoLists, getOrCreateUser } from '@/app/action'
+import { getOrCreateUser } from '@/lib/storage/UserRepository'
+import { findAllTodoLists } from '@/lib/storage/TodoListRepository'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -24,7 +25,7 @@ export default async function RootLayout({
 }) {
   const session = await getServerSession(authOptions)
 
-  if (session === null) {
+  if (session?.user == null || session == null || !session.user.name || !session.user.email) {
     return (
       <html lang="en">
         <body className={`${inter.className} min-h-screen flex flex-col justify-center items-center` }>{children}</body>
@@ -32,15 +33,9 @@ export default async function RootLayout({
     ) 
   }
 
-  const user = await getOrCreateUser({ name: session?.user?.name, email: session?.user?.email})
-  // session: {
-  //   user: {
-  //     name: 'Nhi',
-  //     email: 'mynhinguyentruong@gmail.com',
-  //     image: 'https://avatars.githubusercontent.com/u/64499617?v=4'
-  //   }
-  // }
-  const results = await getAllTodoLists(user.id)
+  const user = await getOrCreateUser({ name: session.user.name, email: session.user.email})
+
+  const results = await findAllTodoLists(user.id)
 
     return (
       <html lang="en">
@@ -68,7 +63,7 @@ export default async function RootLayout({
           <small className="text-xs font-medium">New list</small>
       </Link>
       </nav>
-      <div className="">
+      <div >
           {todolist}
       </div>
   </div>

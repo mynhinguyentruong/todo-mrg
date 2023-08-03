@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import EditAndDeleteIcon from "./edit-delete-icon";
+import EditAndDeleteIcon from "./edit-delete-button";
 import { Todo, TodoList } from "@/app/types/db";
 
 type NoTaskYetProps = {

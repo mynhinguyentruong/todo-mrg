@@ -1,17 +1,19 @@
-import { getATodoList, getAllTodos } from "@/app/action";
 import { Todo } from "@/app/types/db";
-import EditAndDeleteIcon from "@/components/edit-delete-icon";
+import EditAndDeleteIcon from "@/components/edit-delete-button";
 import { TodoComponent } from "@/components/modal";
 import NoTaskYet from "@/components/no-task-yet";
+import { findOneTodoList } from "@/lib/storage/TodoListRepository";
+import { findAllInList } from "@/lib/storage/TodoRepository";
 
 import Link from "next/link";
 
 export default async function Page({params}: { params: { id: string }}) {
     const id = parseInt(params.id)
-    const results: Todo[] = await getAllTodos(id)
-    const todolist = await getATodoList(id)
-    console.log("result in todo, ", results);
+    const results: Todo[] = await findAllInList(id)
+    const todolist = await findOneTodoList(id)
 
+    if (!todolist) throw new Error("Cannot find todo list")
+ 
     const completedTodos: Todo[] = results?.reduce((acc: Todo[], curr: Todo) => {
         curr.completed && acc.push(curr)
         return acc
