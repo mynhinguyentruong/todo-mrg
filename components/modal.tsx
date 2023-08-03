@@ -34,8 +34,8 @@ export default function Modal({ children }: { children: React.ReactNode }) {
   )
 
   useEffect(() => {
-    document.addEventListener('keydown', onKeyDown)
-    return () => document.removeEventListener('keydown', onKeyDown)
+    document.addEventListener('keydown', () => onKeyDown)
+    return () => document.removeEventListener('keydown', () => onKeyDown)
   }, [onKeyDown])
 
   return (
@@ -239,7 +239,7 @@ export function TodoComponent({todo}: { todo: Todo }) {
 
   return (
     <li 
-    className={clsx("inline-flex items-center justify-between gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white", { hidden: isClicked })}>
+      className={clsx("inline-flex items-center justify-between gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white", { hidden: isClicked })}>
       <button 
         onClick={setTodoCompleted}>{todo.content}</button>
       <EditAndDeleteButton listId={todo.listId} todoId={todo.id}/>
