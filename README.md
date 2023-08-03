@@ -1,34 +1,65 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Requirements
 
-## Getting Started
+- Docker
+- NodeJS (>=16)
 
-First, run the development server:
+## Instructions
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+Today we're going to build a Todo App.
+
+### General Requirements
+
+**Technical Requirements**
+
+- User is able to login to retrieve their todos. 
+- User can create/edit/delete todolist contains many todo tasks.
+- It should be fast
+
+**Code Maintainability Check**
+
+- Absolute attention to code quality.
+- `git` is utilized to stick to the strategy of atomic commits
+
+#### Nextjs App Router Server Actions 
+#### Authentication API
+The backend expose one route:
+
+1. '/api/auth/[...nextauth]'
+All requests made to this route will automatically be handled by NextAuth.js.
+```
+GET /api/auth/[...nextauth]
+POST /api/auth/[...nextauth]
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Part 1: API
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### First Start
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. Install deps: `npm install`
+2. Copy .env.example file `cp .env.example .env`
+3. Start the databases `npm run docker`
+4. Run database migrations `npm run migrate`
+5. Run tests `npm run test`
 
-## Learn More
+#### Troubleshooting
+1. Make sure you have all the required enviroment variables
+2. Make sure you have Docker Desktop installed and running in your OS.
+3. 
 
-To learn more about Next.js, take a look at the following resources:
+### Discussion
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Question ? 
+- Open to discussion 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Notes
 
-## Deploy on Vercel
+- I used Drizzle ORM as my database ORM, if you want to modify the database schema,
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  - Edit [schema.ts](db/schema/schema.ts)
+  - Then, generate a new migration, `npm run migrate`
+    - This will also apply the migration
+  - [Data Model](https://orm.drizzle.team/docs/schemas)
+  - [CRUD Operation](https://orm.drizzle.team/docs/crud)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- To inspect the database:
+  - Instruction coming soon...
