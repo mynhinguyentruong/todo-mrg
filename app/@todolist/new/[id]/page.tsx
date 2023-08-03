@@ -1,10 +1,10 @@
-import { getATodoList } from "@/app/action";
 import { TodoList } from "@/app/types/db";
 import Modal, { NewTask } from "@/components/modal";
+import { findOneTodoList } from "@/lib/storage/TodoListRepository";
 
 export default async function New({ params }: { params: { id: string }}) {
     // get authorId
-    const todoList: TodoList = await getATodoList(parseInt(params.id))
+    const todoList: TodoList = await findOneTodoList(parseInt(params.id))
   
     return (
         <Modal>

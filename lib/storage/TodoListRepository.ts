@@ -24,9 +24,7 @@ export async function getOneTodoList(
     undefined
   );
 }
-export async function findOneTodoList(
-  listId: number
-): Promise<TodoList | undefined> {
+export async function findOneTodoList(listId: number): Promise<TodoList> {
   return (await db.select().from(todolists).where(eq(todolists.id, listId)))[0];
 }
 
