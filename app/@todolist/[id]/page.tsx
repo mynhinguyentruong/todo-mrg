@@ -8,6 +8,7 @@ import { findOneTodoList } from "@/lib/storage/TodoListRepository";
 import { findAllInList } from "@/lib/storage/TodoRepository";
 
 import Link from "next/link";
+import { Toaster } from "sonner";
 
 export default async function Page({params}: { params: { id: string }}) {
     const id = parseInt(params.id)
@@ -16,12 +17,12 @@ export default async function Page({params}: { params: { id: string }}) {
 
     if (!todolist) throw new Error("Cannot find todo list")
  
-    const completedTodos: Todo[] = results?.reduce((acc: Todo[], curr: Todo) => {
+    const completedTodos: Todo[] = results.reduce((acc: Todo[], curr: Todo) => {
         curr.completed && acc.push(curr)
         return acc
     },[])
 
-    const incompletedTodos: Todo[] | [] = results?.reduce((acc: Todo[], curr: Todo) => {
+    const incompletedTodos: Todo[] | [] = results.reduce((acc: Todo[], curr: Todo) => {
         !curr.completed && acc.push(curr)
         return acc
     },[])
@@ -74,7 +75,7 @@ export default async function Page({params}: { params: { id: string }}) {
             </div>
             <CompletedTask completedTodos={completedTodos} />
         </div>
-    </>
+        </>
     )
 }
 

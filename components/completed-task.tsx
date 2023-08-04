@@ -3,11 +3,17 @@ import clsx from "clsx"
 import { useState } from "react"
 import { TodoComponent } from "./modal"
 import type { Todo } from "@/app/types/db"
+import { Toaster, toast } from "sonner"
 
 export default function CompletedTask({completedTodos}: { completedTodos: Todo[] | []}) {
     const [isHidden, setIsHidden] = useState(true)
+
+    const markIncompleted = () => {
+        toast("Hiiiii")
+    } 
     return (
         <>
+            <Toaster position="top-center" richColors/>
             <div className="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
                 <div className="flex items-center">
                 <p className="text-sm text-gray-600 dark:text-gray-400 mx-3">

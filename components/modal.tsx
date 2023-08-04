@@ -7,6 +7,7 @@ import clsx from 'clsx'
 import EditAndDeleteButton from '@/components/edit-delete-button'
 import { Todo, TodoList, User } from '@/app/types/db'
 import { createTodoList, deleteTodoList, updateTodoList } from '@/lib/storage/TodoListRepository'
+import { Toaster, toast } from 'sonner'
 
 export default function Modal({ children }: { children: React.ReactNode }) {
   const overlay = useRef(null)
@@ -233,13 +234,16 @@ export function TodoComponent({todo}: { todo: Todo }) {
 
   const setTodoCompleted = async() => {
     setIsClicked(true)
-    await updateTodo(todo.id, { completed: true })
+    if (!todo.completed) toast.success("Task completed")
+    if (todo.completed) toast.success("Task marked incompleted")
+    await updateTodo(todo.id, { completed: !todo.completed })
     router.refresh()
   }
 
   return (
     <li 
       className={clsx("inline-flex items-center justify-between gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white", { hidden: isClicked })}>
+
       <button 
         onClick={setTodoCompleted}>{todo.content}</button>
       <EditAndDeleteButton listId={todo.listId} todoId={todo.id}/>

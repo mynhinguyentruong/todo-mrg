@@ -22,9 +22,11 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  todolist
+  todolist,
+  login
 }: {
   children: React.ReactNode,
+  login: React.ReactNode,
   todolist: React.ReactNode
 }) {
   const session = await getServerSession(authOptions)
@@ -32,7 +34,7 @@ export default async function RootLayout({
   if (session?.user == null ) {
     return (
       <html lang="en">
-        <body className={`${inter.className} min-h-screen flex flex-col justify-center items-center` }>{children}</body>
+        <body className={`${inter.className} min-h-screen flex flex-col justify-center items-center` }>{login}</body>
       </html>
     ) 
   }
