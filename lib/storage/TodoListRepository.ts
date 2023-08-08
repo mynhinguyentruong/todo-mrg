@@ -1,8 +1,8 @@
 "use server";
 
-import { Todo, TodoList } from "@/app/types/db";
+import {  TodoList } from "@/app/types/db";
 import { db } from "@/db";
-import { todolists, users } from "@/db/schema/schema";
+import { todolists } from "@/db/schema/schema";
 import { eq } from "drizzle-orm";
 
 export async function createTodoList(

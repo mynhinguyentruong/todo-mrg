@@ -1,9 +1,9 @@
-import { Todo } from "@/app/types/db";
+import { Todo, TodoList } from "@/app/types/db";
 import Modal, { EditListOrTask } from "@/components/modal";
-import { getOneTodo } from "@/lib/storage/TodoRepository";
+import { findOneTodoList } from "@/lib/storage/TodoListRepository";
 
 export default async function Edit({params}: {params: { id: string }}) {
-    const list = (await getOneTodo(parseInt(params.id))) as Todo
+    const list = (await findOneTodoList(parseInt(params.id))) as TodoList
 
     return (
         <Modal>

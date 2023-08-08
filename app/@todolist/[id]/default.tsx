@@ -1,5 +1,4 @@
+
 export default function Default() {
-    return (
-        <>Default Page</>
-    )
+    return null
 }

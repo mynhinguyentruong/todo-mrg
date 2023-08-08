@@ -1,9 +1,10 @@
 import Link from "next/link";
 
-import EditAndDeleteIcon from "./edit-delete-button";
+import EditAndDeleteButton from "./edit-delete-button";
 import { Todo, TodoList } from "@/app/types/db";
 import CompletedTask from "./completed-task";
-import AddIcon from "./add-icon";
+import AddIcon from "@/components/icons/add-icon";
+
 
 type NoTaskYetProps = {
     todolist: TodoList,
@@ -24,7 +25,7 @@ export default function NoTaskYet({todolist, completedTodos}: NoTaskYetProps) {
                                     <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
                                     {todolist.title}
                                     </h2>
-                                    <EditAndDeleteIcon listId={todolist.id} />
+                                    <EditAndDeleteButton listId={todolist.id} />
                                 </div>
                         
                                 <p className="text-sm text-gray-600 dark:text-gray-400">

@@ -3,8 +3,8 @@ import EditIcon from "@/components/icons/edit-icon";
 import Link from "next/link";
 
 export type EditAndDeleteProps = {
-    listId?: string | number;
-    todoId?: string | number;
+    listId?: number;
+    todoId?: number;
 }
 
 export default function EditAndDeleteButton({ listId, todoId }: EditAndDeleteProps) {

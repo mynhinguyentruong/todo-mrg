@@ -1,14 +1,13 @@
 import { Todo } from "@/app/types/db";
-import AddIcon from "@/components/add-icon";
+import AddIcon from "@/components/icons/add-icon";
 import CompletedTask from "@/components/completed-task";
-import EditAndDeleteIcon from "@/components/edit-delete-button";
+import EditAndDeleteButton from "@/components/edit-delete-button";
 import { TodoComponent } from "@/components/modal";
 import NoTaskYet from "@/components/no-task-yet";
 import { findOneTodoList } from "@/lib/storage/TodoListRepository";
 import { findAllInList } from "@/lib/storage/TodoRepository";
 
 import Link from "next/link";
-import { Toaster } from "sonner";
 
 export default async function Page({params}: { params: { id: string }}) {
     const id = parseInt(params.id)
@@ -45,7 +44,7 @@ export default async function Page({params}: { params: { id: string }}) {
                                         <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
                                         {todolist.title}
                                         </h2>
-                                        <EditAndDeleteIcon listId={params.id} />
+                                        <EditAndDeleteButton listId={parseInt(params.id)} />
                                     </div>
                                     
                                     <p className="text-sm text-gray-600 dark:text-gray-400">

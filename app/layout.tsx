@@ -9,8 +9,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { getOrCreateUser } from '@/lib/storage/UserRepository'
 import { findAllTodoLists } from '@/lib/storage/TodoListRepository'
-import AddIcon from '@/components/add-icon'
-
+import AddIcon from '@/components/icons/add-icon'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -21,11 +20,11 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({
-  children,
+  // children,
   todolist,
   login
 }: {
-  children: React.ReactNode,
+  // children: React.ReactNode,
   login: React.ReactNode,
   todolist: React.ReactNode
 }) {

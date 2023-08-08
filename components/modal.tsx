@@ -7,7 +7,7 @@ import clsx from 'clsx'
 import EditAndDeleteButton from '@/components/edit-delete-button'
 import { Todo, TodoList, User } from '@/app/types/db'
 import { createTodoList, deleteTodoList, updateTodoList } from '@/lib/storage/TodoListRepository'
-import { Toaster, toast } from 'sonner'
+import {  toast } from 'sonner'
 
 export default function Modal({ children }: { children: React.ReactNode }) {
   const overlay = useRef(null)
@@ -101,8 +101,8 @@ export function NewTask({ todoList }: { todoList: TodoList}) {
   }
 
 type ListOrTask = {
-  list: TodoList | null,
-  todo: Todo | null
+  list?: TodoList | null,
+  todo?: Todo | null
 }
 
 
@@ -122,6 +122,7 @@ export function EditListOrTask({ list, todo }: ListOrTask) {
         await updateTodo(todo.id, { content: title }) 
 
         router.refresh()
+        router.push(`/${todo.listId}`)
         return;
       }
 
@@ -129,6 +130,7 @@ export function EditListOrTask({ list, todo }: ListOrTask) {
         await updateTodoList(list.id, {title})
 
         router.refresh()
+        router.push(`/${list.id}`)
         return 
       }
     }
