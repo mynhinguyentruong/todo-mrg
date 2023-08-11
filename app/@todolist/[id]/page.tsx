@@ -14,7 +14,7 @@ export default async function Page({params}: { params: { id: string }}) {
     const results: Todo[] = await findAllInList(id)
     const todolist = await findOneTodoList(id)
 
-    if (!todolist) throw new Error("Cannot find todo list")
+    if (!todolist) throw new Error(`Cannot find todo list with id ${params.id} `)
  
     const completedTodos: Todo[] = results.reduce((acc: Todo[], curr: Todo) => {
         curr.completed && acc.push(curr)
@@ -58,7 +58,7 @@ export default async function Page({params}: { params: { id: string }}) {
                             <!-- Body --> */}
                             <div className="max-w-xl w-full min-h-[400px] flex flex-col justify-center mx-auto px-6 py-4 ">
                                 {/* A todo */}
-                                <ul className="flex flex-col divide-y divide-gray-200 dark:divide-gray-700">
+                                <ul data-testid="incompleted-todos" className="flex flex-col divide-y divide-gray-200 dark:divide-gray-700">
                                     {incompletedTodos.map(todo => <TodoComponent key={todo.id} todo={todo}/>)}
                                     <li className="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
                                         <Link href={`/new/${params.id}`} className="flex items-center">

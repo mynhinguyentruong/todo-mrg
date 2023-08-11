@@ -43,16 +43,16 @@ export default function NoTaskYet({todolist, completedTodos}: NoTaskYetProps) {
                                     </svg>
                                 </div>
 
-                                <h2 className="mt-5 font-semibold text-gray-800 dark:text-white">
+                                <h2 data-testid="no-task-header" className="mt-5 font-semibold text-gray-800 dark:text-white">
                                 No task yet
                                 </h2>
-                                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                                <p data-testid="no-task-paragraph" className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                                 Add your to-dos and keep track of them across Workspace.
                                 </p>
                     
 
                                 <div className="mt-5 grid sm:flex gap-2">
-                                    <Link href={`/new/${todolist.id}`} className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-red-400 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                    <Link data-testid="newtask-button" href={`/new/${todolist.id}`} className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-red-400 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                                         <AddIcon/>
                                         Create a new task
                                     </Link>

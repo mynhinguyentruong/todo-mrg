@@ -3,20 +3,17 @@ import clsx from "clsx"
 import { useState } from "react"
 import { TodoComponent } from "./modal"
 import type { Todo } from "@/app/types/db"
-import { Toaster, toast } from "sonner"
+import { Toaster } from "sonner"
 
 export default function CompletedTask({completedTodos}: { completedTodos: Todo[] | []}) {
     const [isHidden, setIsHidden] = useState(true)
 
-    const markIncompleted = () => {
-        toast("Hiiiii")
-    } 
     return (
         <>
             <Toaster position="top-center" richColors/>
             <div className="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
                 <div className="flex items-center">
-                <p className="text-sm text-gray-600 dark:text-gray-400 mx-3">
+                <p data-testid="completed-todo" className="text-sm text-gray-600 dark:text-gray-400 mx-3">
                     <span className="font-semibold text-gray-800 dark:text-gray-200">{completedTodos.length}</span> completed
                 </p>
                 <button 
@@ -29,7 +26,7 @@ export default function CompletedTask({completedTodos}: { completedTodos: Todo[]
             
                 </div>
             </div>
-            <ul className={clsx({hidden: isHidden},"max-h-32 mx-auto max-w-lg overflow-scroll flex flex-col divide-y divide-gray-200 dark:divide-gray-70" )}>
+            <ul data-testid="completed-todos" className={clsx({hidden: isHidden},"max-h-32 mx-auto max-w-lg overflow-scroll flex flex-col divide-y divide-gray-200 dark:divide-gray-70" )}>
                 {completedTodos?.map((todo: Todo) => (<TodoComponent key={todo.id} todo={todo} />))}
             </ul>
         </>
