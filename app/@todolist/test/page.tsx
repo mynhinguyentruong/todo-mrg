@@ -1,3 +1,5 @@
+import Button from "./button";
+
 export default function Loading() {
     return (
         <div role="status" className="animate-pulse py-64 ">
@@ -12,6 +14,7 @@ export default function Loading() {
                 <div className="w-24 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
             </div>
             <span className="sr-only">Loading...</span>
+            <Button />
         </div>
     )
 }
