@@ -11,6 +11,10 @@ export async function createTodo(
   return (await db.insert(todos).values(todo).returning())[0];
 }
 
+export async function createTodos(todoArr: Omit<Todo, "id" | "completed">[]): Promise<Todo[]> {
+  return await db.insert(todos).values(todoArr).returning()
+}
+
 export async function getOneTodo(todoId: number): Promise<Todo | undefined> {
   const dbTodo = await db.select().from(todos).where(eq(todos.id, todoId));
 

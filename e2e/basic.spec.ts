@@ -7,8 +7,8 @@ test('user able to create new list from clicking button on navbar, create new ta
   await page.getByRole('link', { name: 'New list', exact: true }).click()
   await page.getByPlaceholder('Enter list title').fill('List name');
   await page.getByRole('button', { name: 'Done' }).click();
+
   await page.getByTestId('newtask-button').click()
-// getByRole('link', { name: 'New task' })
   await page.getByPlaceholder('New task').fill('Task 1');
   await page.getByRole('button', { name: 'Done' }).click();
   await expect(page.locator('li').first()).toContainText('Task 1')
