@@ -8,6 +8,7 @@ import EditAndDeleteButton from '@/components/edit-delete-button'
 import { Todo, TodoList, User } from '@/app/types/db'
 import { createTodoList, deleteTodoList, updateTodoList } from '@/lib/storage/TodoListRepository'
 import {  toast } from 'sonner'
+import Popup from '@/components/popup'
 
 export default function Modal({ children }: { children: React.ReactNode }) {
   const overlay = useRef(null)
@@ -55,7 +56,29 @@ export default function Modal({ children }: { children: React.ReactNode }) {
   )
 }
 
+export function AIPrompt({ todoList }: { todoList: TodoList }) {
+  // take input prompt from user
+  // loop through an array of task
+  // update db
+  //
+  const [title, setTitle] = useState("")
+  // const todo: Omit<Todo, "id" | "completed"> = {
+  //   authorId: todoList.authorId,
+  //   content: title,
+  //   title: todoList.title,
+  //   listId: todoList.id
+  // }
 
+  // const add = async(): Promise<void> => {
+  //   await createTodo(todo)
+  //   router.refresh()
+  //   router.push(`/${todoList.id}`)
+  // }
+
+  return (
+      <Popup title={title} setTitle={setTitle} createTodo={createTodo}/>
+      )
+}
 
 export function NewTask({ todoList }: { todoList: TodoList}) {
     const router = useRouter()
@@ -76,9 +99,9 @@ export function NewTask({ todoList }: { todoList: TodoList}) {
     
     return (
       <>
-       <div className="m-8 my-20 max-w-[400px] mx-auto rounded-lg">
+       <div className="m-8 my-20 max-w-[600px] mx-auto rounded-lg">
        <div className="px-6 py-6 lg:px-8 bg-slate-50">
-                <h3 className="mb-4 text-xl font-medium text-gray-900  rounded-lg">Create new task</h3>
+                <h3 className="mb-4 text-xl font-medium text-gray-900  rounded-lg">Create new tasks</h3>
                 <form className="space-y-6" >
                     <div>
                         <input 
