@@ -10,7 +10,7 @@
     "lint": "next lint",
     "docker": "docker compose --env-file .env up -d",
     "docker:terminate": "docker compose down",
-    "migrate": "drizzle-kit generate:pg && node -r esbuild-register ./db/schema/migrate.ts",
+    "migrate": "drizzle-kit generate:pg && NODE_TLS_REJECT_UNAUTHORIZED='0' node -r esbuild-register ./db/schema/migrate.ts",
     "migration:push": ""
   },
   "dependencies": {
