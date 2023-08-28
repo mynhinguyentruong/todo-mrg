@@ -4,7 +4,7 @@ import { migrate } from "drizzle-orm/postgres-js/migrator";
 import postgres from "postgres";
 import "dotenv/config";
 
-const connectionString = `postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@localhost:54322/tododatabase`;
+const connectionString = process.env.PROD_POSTGRES ? process.env.PROD_POSTGRES : `postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@localhost:54322/tododatabase`;
 
 const sql = postgres(connectionString, { max: 1 });
 const db = drizzle(sql);
