@@ -11,7 +11,9 @@
     "docker": "docker compose --env-file .env up -d",
     "docker:terminate": "docker compose down",
     "migrate": "drizzle-kit generate:pg && NODE_TLS_REJECT_UNAUTHORIZED='0' node -r esbuild-register ./db/schema/migrate.ts",
-    "migration:push": ""
+    "migration:push": "",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@types/node": "20.4.5",
@@ -36,6 +38,16 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.36.2",
-    "drizzle-kit": "^0.19.12"
+    "@storybook/addon-essentials": "^7.4.0",
+    "@storybook/addon-interactions": "^7.4.0",
+    "@storybook/addon-links": "^7.4.0",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/blocks": "^7.4.0",
+    "@storybook/nextjs": "^7.4.0",
+    "@storybook/react": "^7.4.0",
+    "@storybook/testing-library": "^0.2.0",
+    "drizzle-kit": "^0.19.12",
+    "eslint-plugin-storybook": "^0.6.13",
+    "storybook": "^7.4.0"
   }
 }
